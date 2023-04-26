@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RestController                 // @Controller + @ResponseBody
+@RequiredArgsConstructor        // final 이 붙거나 @NotNull 이 붙은 필드 생성자 자동 생성
+@RequestMapping("/api/user")        // 공통되는 URL 묶음
 public class UserController {
 
     // UserService 연결
