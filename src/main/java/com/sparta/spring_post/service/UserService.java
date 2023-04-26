@@ -30,17 +30,26 @@ public class UserService {
 
         // 아이디 형식 확인
         if (!Pattern.matches("^[a-z0-9]{4,10}$", username)) {
+            // 정규표현식을 사용하여 username 문자열 유효성 검사
+            // 소문자 ( a-z ), 숫자 ( 0-9 ) 로만 구성되어야 하며 길이는 4~10자 사이여야 함
+            // ^ : 시작, $ : 끝
+            // ㄱ-ㅎ가-힣 : 한글 문자
+            // \\d : 0-9 숫자, \\D : \\d 가 아닌 것
+            // \\w : [A-Za-z0-9_], \\W : \\w 가 아닌 것
             return ResponseDto.setFailed("형식에 맞지 않는 아이디 입니다.");
         }
 
         // 비밀번호 형식 확인
         if (!Pattern.matches("^[a-zA-Z0-9]{8,15}$", password)) {
+            // 정규표현식을 사용하여 password 문자열 유효성 검사
+            // 대문자 ( A-Z ), 소문자 ( a-z ), 숫자 ( 0-9 ) 로만 구성되어야 하며 길이는 8~15자 사이여야 함
             return ResponseDto.setFailed("형식에 맞지 않는 비밀번호 입니다.");
         }
 
         // 회원 중복 확인
         Optional<Users> found = userRepository.findByUsername(username);
         if (found.isPresent()) {
+            // isPresent() : Optional 객체가 값을 가지고 있다면 true, 값이 없다면 false 리턴 ( boolean 타입 )
             return ResponseDto.setFailed("중복된 사용자입니다.");
         }
 
@@ -65,6 +74,7 @@ public class UserService {
         }
 
         httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(users.getUsername()));
+        // JWT 토큰을 생성하고 HTTP 응답 헤더에 추가
         return ResponseDto.setSuccess("로그인 성공!", null);
     }
 
