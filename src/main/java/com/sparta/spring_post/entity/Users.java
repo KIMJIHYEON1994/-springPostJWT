@@ -16,7 +16,7 @@ public class Users {
     private String username;
 
     @Column(nullable = false)
-    @JsonIgnore
+    @JsonIgnore     // 데이터를 주고받을 때, 해당 데이터 ignore. 응답값 보이지 않음
     private String password;
 
     public Users(String username, String password) {
